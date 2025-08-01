@@ -161,7 +161,7 @@ class ChineseCalendar {
                                         array(3, 4),
                                         array(5, 6),
                                         array(7, 8),
-                                        array(7, 10),
+                                        array(9, 10),
                                         array(11, 12),
                                         array(13, 14),
                                         array(15, 16),
@@ -537,24 +537,48 @@ class ChineseCalendar {
 
     return 0;
   }
-  private function computeHourStemBranch(){
-    if ($this->gregorianHour < 0 ||
-        $this->gregorianHour > 23){
-      // out of range
-      return 1;
-    }
-    foreach (self::$HourBranchMap as $i=>$hours){
-      if (in_array($this->gregorianHour, $hours)){
-        $this->hourBranch = $i;
-        break;
-      }
-    }
-    // calculate from datestem
-    $ratStem = ($this->dateStem * 2) % 10;
-    $this->hourStem = ($ratStem + $this->hourBranch) % 10;
-		 
-    return 0;
+
+private function computeHourStemBranch(){
+  if ($this->gregorianHour < 0 || $this->gregorianHour > 23){
+    return 1; // invalid
   }
+
+  foreach (self::$HourBranchMap as $i => $hours){
+    if (in_array($this->gregorianHour, $hours)){
+      $this->hourBranch = $i;
+      break;
+    }
+  }
+
+  if (!isset($this->hourBranch)) {
+    error_log("Hour branch not found for hour: " . $this->gregorianHour);
+    $this->hourBranch = 0; // default: 子 (Rat)
+  }
+
+  $ratStem = ($this->dateStem * 2) % 10;
+  $this->hourStem = ($ratStem + $this->hourBranch) % 10;
+
+  return 0;
+}
+
+  
+//  private function computeHourStemBranch(){
+//    if ($this->gregorianHour < 0 ||
+//        $this->gregorianHour > 23){
+      // out of range
+//      return 1;
+//    }
+//    foreach (self::$HourBranchMap as $i=>$hours){
+//      if (in_array($this->gregorianHour, $hours)){
+//        $this->hourBranch = $i;
+//        break;
+//      }
+//    }
+    // calculate from datestem
+//    $ratStem = ($this->dateStem * 2) % 10;
+//    $this->hourStem = ($ratStem + $this->hourBranch) % 10;
+//    return 0;
+//  }
 
   /**
    * Get branch name based on number 1,2,3, etc
