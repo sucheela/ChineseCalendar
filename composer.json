@@ -2,7 +2,7 @@
   "name": "sucheela/chinese-calendar",
   "description": "Chinese calendar utilities: heavenly stems and earthly branches calculations",
   "type": "library",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "config": {
     "lock": false
 },
