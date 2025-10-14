@@ -1,4 +1,33 @@
 # ChineseCalendar
+
+Calculate Chinese dates from Gregorian dates. Works until the year 2100 based on Dr. Herong Yang's ChineseCalendar.java.
+
+Installation
+------------
+
+Install using Composer (local development):
+
+```bash
+composer install
+composer dump-autoload
+```
+
+Usage
+-----
+
+```php
+require 'vendor/autoload.php';
+
+use Sucheela\ChineseCalendar\ChineseCalendar;
+
+$cal = new ChineseCalendar(2000, 12, 31, 23);
+
+echo $cal->getStem(ChineseCalendar::TYPE_YEAR); // Yang Metal
+echo $cal->getBranch(ChineseCalendar::TYPE_YEAR); // Dragon
+```
+
+There's an example script in `examples/usage.php`.
+# ChineseCalendar
 Calculate Chinese dates from Gregorian dates. Work until the year 2100
 
 ## Usage:
